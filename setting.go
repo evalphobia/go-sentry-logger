@@ -20,14 +20,13 @@ const (
 )
 
 var (
-	Logger      map[string]*log.Logger
+	Logger      Loggers
 	config      Config
 	sentryLevel int
 )
 
 func init() {
-	Logger = make(map[string]*log.Logger)
-	SetDefaultLogger(Logger)
+	SetDefaultLogger()
 	SetDefaultConfig()
 	sentryLevel = sentryLevelWarn
 }
@@ -48,4 +47,8 @@ type Config interface {
 
 	// params(filename, section, key)
 	GetConfigValue(string, string) string
+}
+
+type Loggers interface {
+	GetLogger(string) *log.Logger
 }

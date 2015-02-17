@@ -12,14 +12,33 @@ import (
 
 // override loggers in initialize
 func init() {
-	setRevelLogger(LOG.Logger)
+	LOG.Logger = &RevelLogger{
+		loggers: make(map[string]*log.Logger),
+	}
 }
 
-// set loggers to revel's logger
-func setRevelLogger(loggers map[string]*log.Logger) {
-	loggers["fatal"] = revel.ERROR
-	loggers["error"] = revel.ERROR
-	loggers["warn"] = revel.WARN
-	loggers["info"] = revel.INFO
-	loggers["debug"] = revel.TRACE
+type RevelLogger struct {
+	loggers map[string]*log.Logger
+}
+
+func (l *RevelLogger) GetLogger(name string) *log.Logger {
+	logger, ok := l.loggers[name]
+	if !ok {
+		switch name {
+		case "fatal":
+			logger = revel.ERROR
+		case "error":
+			logger = revel.ERROR
+		case "warn":
+			logger = revel.WARN
+		case "info":
+			logger = revel.INFO
+		case "debug":
+			logger = revel.TRACE
+		default:
+			logger = revel.TRACE
+		}
+		l.loggers[name] = logger
+	}
+	return logger
 }

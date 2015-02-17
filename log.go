@@ -31,56 +31,68 @@ func NewLogData(data Any, depth int) *LogData {
 
 // logging fatal error
 func Fatal(l *LogData) {
+	logger := Logger.GetLogger("fatal")
 	file, line := getTrace(l.depth)
 	toSentry := sentryLevel >= sentryLevelFatal
-	logging(Logger["fatal"], l, file, line, toSentry)
+	logging(logger, l, file, line, toSentry)
 }
 
 // logging high level error
 func Error(l *LogData) {
+	logger := Logger.GetLogger("error")
 	file, line := getTrace(l.depth)
 	toSentry := sentryLevel >= sentryLevelError
-	logging(Logger["error"], l, file, line, toSentry)
+	logging(logger, l, file, line, toSentry)
 }
 
 // logging middle level error
 func Warn(l *LogData) {
+	logger := Logger.GetLogger("warn")
 	file, line := getTrace(l.depth)
 	toSentry := sentryLevel >= sentryLevelWarn
-	logging(Logger["warn"], l, file, line, toSentry)
+	logging(logger, l, file, line, toSentry)
 }
 
 // logging infomation
 func Info(l *LogData) {
+	logger := Logger.GetLogger("info")
 	file, line := getTrace(l.depth)
 	toSentry := sentryLevel >= sentryLevelInfo
-	logging(Logger["info"], l, file, line, toSentry)
+	logging(logger, l, file, line, toSentry)
 }
 
 // logging debug infomation
 func Debug(l *LogData) {
+	logger := Logger.GetLogger("debug")
 	file, line := getTrace(l.depth)
 	toSentry := sentryLevel >= sentryLevelDebug
-	logging(Logger["debug"], l, file, line, toSentry)
+	logging(logger, l, file, line, toSentry)
 }
 
 // logging error without sentry
 func ErrorWithoutTrack(l *LogData) {
+	logger := Logger.GetLogger("error")
 	file, line := getTrace(l.depth)
-	logging(Logger["error"], l, file, line, false)
+	logging(logger, l, file, line, false)
 }
 
 // print infomation with the logging format
-func Print(v Any) {
-	l := NewLogData(v, 2)
+func Print(v Any, depth int) {
+	l := NewLogData(v, depth)
 	file, line := getTrace(l.depth)
 	m := composeLogData(file, line, l)
 	printData(m)
 }
 
 // print header
-func PrintHeader() {
-	fmt.Println("================================\n================================")
+func PrintHeader(v ...Any) {
+	var val string
+	if len(v) > 0 {
+		val = fmt.Sprint(v[0])
+	} else {
+		val = ""
+	}
+	fmt.Printf("\n============================ %s ============================\n", val)
 }
 
 // write log, send sentry
