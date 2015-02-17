@@ -33,7 +33,7 @@ func NewLogData(data Any, depth int) *LogData {
 func Fatal(l *LogData) {
 	logger := Logger.GetLogger("fatal")
 	file, line := getTrace(l.depth)
-	toSentry := sentryLevel >= sentryLevelFatal
+	toSentry := SentryLevel <= sentryLevelFatal
 	logging(logger, l, file, line, toSentry)
 }
 
@@ -41,7 +41,7 @@ func Fatal(l *LogData) {
 func Error(l *LogData) {
 	logger := Logger.GetLogger("error")
 	file, line := getTrace(l.depth)
-	toSentry := sentryLevel >= sentryLevelError
+	toSentry := SentryLevel <= sentryLevelError
 	logging(logger, l, file, line, toSentry)
 }
 
@@ -49,7 +49,7 @@ func Error(l *LogData) {
 func Warn(l *LogData) {
 	logger := Logger.GetLogger("warn")
 	file, line := getTrace(l.depth)
-	toSentry := sentryLevel >= sentryLevelWarn
+	toSentry := SentryLevel <= sentryLevelWarn
 	logging(logger, l, file, line, toSentry)
 }
 
@@ -57,7 +57,7 @@ func Warn(l *LogData) {
 func Info(l *LogData) {
 	logger := Logger.GetLogger("info")
 	file, line := getTrace(l.depth)
-	toSentry := sentryLevel >= sentryLevelInfo
+	toSentry := SentryLevel <= sentryLevelInfo
 	logging(logger, l, file, line, toSentry)
 }
 
@@ -65,7 +65,7 @@ func Info(l *LogData) {
 func Debug(l *LogData) {
 	logger := Logger.GetLogger("debug")
 	file, line := getTrace(l.depth)
-	toSentry := sentryLevel >= sentryLevelDebug
+	toSentry := SentryLevel <= sentryLevelDebug
 	logging(logger, l, file, line, toSentry)
 }
 

@@ -22,13 +22,13 @@ const (
 var (
 	Logger      Loggers
 	config      Config
-	sentryLevel int
+	SentryLevel int
 )
 
 func init() {
 	SetDefaultLogger()
 	SetDefaultConfig()
-	sentryLevel = sentryLevelWarn
+	SentryLevel = sentryLevelWarn
 }
 
 // get parameter from config file
