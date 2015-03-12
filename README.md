@@ -23,7 +23,7 @@ import(
     log "github.com/evalphobia/go-sentry-logger"
 )
 
-fun main(){
+func main(){
     _, err := someFunction() // dummy code
 
     if err != nil {
