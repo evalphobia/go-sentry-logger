@@ -42,6 +42,10 @@ fun main(){
         log.Error(err) // logging & send data to senty, level=4
         log.Warn(err)  // do NOT send data to senty, level=3
     }
+    
+    // use for print debugging, 
+    log.PrintHeader("!!debug data!!")
+    log.Print(err, 0)
 }
 ```
 
